@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string intToRoman(int num) {
+     
+    string s[4][10] = { {" ","I","II","III","IV","V","VI","VII","VIII","IX"},//one
+        {" ","X","XX","XXX","XL","L","LX","LXX","LXXX","XC"},//ten
+        {" ","C","CC","CCC","CD","D","DC","DCC","DCCC","CM"},//hundred
+        {" ","M","MM","MMM"}//thou 题目给到1~3999
+    };
+ 
+    string str[7] = {" "," "," "," "," "," "," "};
+    string res;
+    int nn=1;
+    for (int i = 0; i < 4; i++) {
+        str[6 - 2 * i] = s[i][num % 10];
+        num = num / 10;
+        if (num != 0) nn++;
+    }
+     
+    for (int k = 8-2*nn; k < 7; k++) {
+        res+=str[k];
+        if ((!strcmp(str[k + 2].data(), " "))&&(k<5)) break;
+    }
+    return res;
+         
+    }
+};
