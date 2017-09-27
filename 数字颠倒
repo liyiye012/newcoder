@@ -1,0 +1,23 @@
+#include<iostream>
+#include<string>
+#include<iterator>
+#include<algorithm>
+#include<vector>
+#include<fstream>
+#include<map>
+#include<stack>
+#include<queue>
+using namespace std;
+int main(){
+    int n;
+        cin>>n;
+        string s;
+        char ch;
+        while (n > 0) {
+            ch = n % 10 + '0';
+            s=s+ch;
+            n = n / 10;
+        }
+        cout << s;
+ 
+}
