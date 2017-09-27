@@ -1,0 +1,134 @@
+class ToString {
+public:
+    string toString(int x) {
+        // write code here
+        vector<string> s,ss;
+    vector<vector<string>> str = { {"","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"},
+    { "Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"},
+    {"","","Twenty","Thirty","Fourty","Fifty","Sixty","Seventy","Eighty","Ninety"},
+    {"","","Hundred","Thousand","","","Million","","","Billion"}
+    };
+    int num = x;
+    if (num < 10) s.push_back(str[0][num]);
+    else if (num < 20) s.push_back(str[1][num-10]);
+    else if (num < 100) { s.push_back(str[0][num % 10]);
+    s.push_back(" ");
+    s.push_back(str[2][num / 10]);
+    }
+    else if (num < 1000) {
+        s.push_back(str[0][num % 10]);
+        //s.push_back(" ");
+        num = num / 10;
+        s.push_back(str[2][num % 10]);
+        num = num / 10;
+        s.push_back(str[3][2]);
+        //s.push_back(" ");
+        s.push_back(str[0][num]);
+         
+ 
+    }
+    else if(num<1000000) {
+        s.push_back(str[0][num % 10]);
+        //s.push_back(" ");
+        num = num / 10;
+        s.push_back(str[2][num % 10]);
+        num = num / 10;
+        s.push_back(str[3][2]);
+        //s.push_back(" ");
+        s.push_back(str[0][num%10]);
+        s.push_back(",");
+        num = num / 10;
+        s.push_back(str[3][3]);//thousand
+ 
+        s.push_back(str[0][num % 10]);
+        //s.push_back(" ");
+        num = num / 10;
+        s.push_back(str[2][num % 10]);
+        num = num / 10;
+        s.push_back(str[3][2]);
+        //s.push_back(" ");
+        s.push_back(str[0][num % 10]);
+    }
+    else if (num<1000000000) {
+        s.push_back(str[0][num % 10]);
+        //s.push_back(" ");
+        num = num / 10;
+        s.push_back(str[2][num % 10]);
+        num = num / 10;
+        s.push_back(str[3][2]);
+        //s.push_back(" ");
+        s.push_back(str[0][num % 10]);
+        s.push_back(",");
+        num = num / 10;
+        s.push_back(str[3][3]);//thousand
+ 
+        s.push_back(str[0][num % 10]);
+        //s.push_back(" ");
+        num = num / 10;
+        s.push_back(str[2][num % 10]);
+        num = num / 10;
+        s.push_back(str[3][2]);
+        //s.push_back(" ");
+        s.push_back(str[0][num % 10]);
+        s.push_back(",");
+        num = num / 10;
+        s.push_back(str[3][6]);//million
+        s.push_back(str[0][num % 10]);
+        //s.push_back(" ");
+        num = num / 10;
+        if (num != 0) s.push_back(str[2][num % 10]);
+        num = num / 10;
+        if (num != 0) { s.push_back(str[3][2]); }
+        if (num != 0)s.push_back(str[0][num % 10]);
+    }
+    else if (num>1000000000) {
+        s.push_back(str[0][num % 10]);
+        //s.push_back(" ");
+        num = num / 10;
+        s.push_back(str[2][num % 10]);
+        num = num / 10;
+        s.push_back(str[3][2]);
+        //s.push_back(" ");
+        s.push_back(str[0][num % 10]);
+        s.push_back(",");
+        num = num / 10;
+        s.push_back(str[3][3]);//thousand
+ 
+        s.push_back(str[0][num % 10]);
+        //s.push_back(" ");
+        num = num / 10;
+        s.push_back(str[2][num % 10]);
+        num = num / 10;
+        s.push_back(str[3][2]);
+        //s.push_back(" ");
+        s.push_back(str[0][num % 10]);
+        s.push_back(",");
+        num = num / 10;
+        s.push_back(str[3][6]);//million
+        s.push_back(str[0][num % 10]);
+        //s.push_back(" ");
+        num = num / 10;
+        s.push_back(str[2][num % 10]);
+        num = num / 10;
+        if (num != 0) s.push_back(str[3][2]);
+        //s.push_back(" ");
+        if (num != 0) s.push_back(str[0][num % 10]);
+        if (num != 0) s.push_back(",");
+        num = num / 10;
+        if (num != 0) s.push_back(str[3][9]);//billion
+        if (num != 0) s.push_back(str[0][num % 10]);
+        //s.push_back(" ");
+        num = num / 10;
+        if (num != 0) s.push_back(str[2][num % 10]);
+        num = num / 10;
+        s.push_back(str[3][2]);
+        if (num != 0) //s.push_back(" ");
+            if (num != 0) s.push_back(str[0][num % 10]);
+ 
+    }
+    for (int i = s.size()-1; i >= 0; i--) {
+        ss.push_back(s[i]);
+        }
+        return ss;
+    }
+};
