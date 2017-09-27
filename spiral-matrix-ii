@@ -1,0 +1,27 @@
+public class Solution {
+    public int[][] generateMatrix(int n) {
+        int res[][]=new int[n][n];
+         if(n==0){
+         return res;
+         }
+         int x=0,y=0,a=1,N=n-1;
+         while(x<=N&&y<=N){
+             for(int i=x;i<=N;i++){
+                 res[x][i]=a++;
+             }
+             for(int j=y+1;j<=N;j++){
+                 res[j][N]=a++;
+             }
+             for(int i=N-1;i>=y;i--){
+                 res[N][i]=a++;
+             }
+             for(int j=N-1;j>x;j--){
+                 res[j][x]=a++;
+             }
+             x++;
+             y++;
+             N--;
+         }
+         return res;
+    }
+}
