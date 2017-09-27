@@ -1,0 +1,21 @@
+class Different {
+public:
+    bool checkDifferent(string iniString) {
+        // write code here
+        int len = iniString.length();
+    cout << len<<endl;
+    sort(&iniString[0],&iniString[len-1]);
+    int i, j;
+    bool flag=true;
+    for (i = 0; i < len; i++) {
+        for (j = i+1; j < len; j++) {
+            if (iniString[i] == iniString[j])
+            {
+                flag = false;
+                break;
+            }
+        }
+    }
+        return flag;
+    }
+};
