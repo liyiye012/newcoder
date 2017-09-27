@@ -1,0 +1,28 @@
+class Printer {
+public:
+    vector<int> arrayPrint(vector<vector<int> > arr, int n) {
+        // write code here
+       vector<int> b;
+    //打印右上部分
+    for (int j = n - 1; j > 0; j--) {
+        int x = 0;
+        int y = j;
+        while (x < n&&y < n) {
+            b.push_back(arr[x][y] );
+            x++;
+            y++;
+        }
+     }
+    //打印对角线及左下部分
+     for (int i = 0; i < n ; i++) {
+        int x = i;
+        int y = 0;
+        while (x < n&&y < n) {
+            b.push_back(arr[x][y] );
+            x++;
+            y++;
+        }
+    }
+        return b;
+    }
+};
