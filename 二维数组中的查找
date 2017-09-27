@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool Find(int target, vector<vector<int> > array) {
+            bool flag = false;
+        if (array.size() != 0 && array[0].size() != 0) {
+            int row = array.size();
+            int m = 0;
+            int column = array[0].size();
+            int n = column - 1;
+            //cout << row << endl << column;
+            while (m < row && n >= 0) {
+                if (array[m][n] == target) {
+                    flag = true;
+                    break;
+                }
+                else if ( target <array[m][n]) {
+                    n--;
+                    //cout << "n-- and n="<<n << endl;
+                }
+                else
+                {
+                    m++;
+                }
+            }
+        }
+        return flag;
+    }
+};
