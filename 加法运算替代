@@ -1,0 +1,28 @@
+class AddSubstitution {
+public:
+    int calc(int a, int b, int type) {
+        // write code here
+        int result=0,n=0;
+    switch (type)
+    {
+    case 1: {
+        for (int i = 0; i < b; i++) {
+            result = result + a;
+        }
+        break; }
+    case 0: {
+        result--;
+        while (n<a){
+            n += b;
+            result++;
+        }
+        break; }
+    case -1: {
+        result = a + (~b + 1);//按位取反加1为该正数的负数；
+        break; }
+    default:
+        break;
+    }
+    return result;
+    }
+};
