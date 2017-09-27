@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> searchRange(int A[], int n, int target) {
+        bool flag=true;
+    vector<int> range;
+    for (int i = 0; i < n; i++) {
+        if (A[i] == target) {
+            range.push_back(i); 
+            flag = false;
+        }
+    }
+        if(range.size()==1) range.push_back(range[0]);
+        else if (range.size() > 2) {
+        int temp1 = range[0];
+        int temp2 = range[range.size() - 1];
+        int len = range.size();
+        for (int i = 0; i <len ; i++) {//for (int i = 0; i < range.size(); i++)  bug:range.size() will change ,we need i const number
+            range.pop_back();
+        }
+        range.push_back(temp1);
+        range.push_back(temp2);
+    }
+    if (flag == false) return range;
+    else { range.push_back(-1);
+    range.push_back(-1);
+    return range;
+    }
+    }
+};
