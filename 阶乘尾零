@@ -1,0 +1,12 @@
+class Factor {
+public:
+    int getFactorSuffixZero(int n) {
+        // write code here
+        int a=0;
+      while(n){
+          n=n/5;
+         a=a+n;
+      }
+        return a;
+    }
+};
