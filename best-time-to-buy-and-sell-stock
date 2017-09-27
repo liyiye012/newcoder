@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxProfit(vector<int> &prices) {
+             
+int len = prices.size();
+    vector<int> change(len);
+    int profit=0,maxprofit=0;
+    //cout << len;
+    for (int i = 0; i < len; i++) {
+        for (int j = i+1; j < len; j++) {
+        change[j] = prices[j] - prices[i];     
+        maxprofit = max(maxprofit, change[j]);
+        }
+    }
+ 
+    return maxprofit;
+ 
+    }
+};
