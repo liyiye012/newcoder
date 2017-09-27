@@ -1,0 +1,9 @@
+class StringRotation {
+public:
+    string rotateString(string A, int n, int p) {
+        // write code here
+        string B=A+A;
+        string C=B.substr(p+1,n);
+        return C;
+    }
+};
