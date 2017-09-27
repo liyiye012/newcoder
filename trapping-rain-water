@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int trap(int A[], int n) {
+        int sum = 0,max=0,left=0,right=n-1;
+        for (int i = 0; i < n; i++) {
+            if (A[i] > A[max]) {
+                max = i;
+            }
+        }
+        for (int j = 0; j < max; j++) {
+            if (A[j] < A[left]) {
+                sum = sum + A[left] - A[j];
+            }
+            else left = j;
+        }
+        for (int k = n - 1; k > max; k--) {
+            if (A[k] < A[right]) {
+                sum += A[right] - A[k];
+            }
+            else right = k;
+        }
+        return sum;
+    }
+};
