@@ -1,0 +1,14 @@
+class Reverse {
+public:
+    string reverseString(string iniString) {
+        // write code here
+        int len =iniString.length();
+        char c;
+        for(int i=0;i<len/2;i++){
+            c=iniString[i];
+            iniString[i]=iniString[len-i-1];
+            iniString[len-i-1]=c;
+        }
+        return iniString;
+    }
+};
