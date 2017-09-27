@@ -1,0 +1,27 @@
+class Same {
+public:
+    bool checkSam(string stringA, string stringB) {
+        // write code here 
+    int lena = stringA.length();
+    int lenb = stringB.length();
+        bool flag=true;
+    if (lena != lenb) flag=false;
+    char a[256] = { 0 };
+    char b[256] = { 0 };
+    for (int i = 0; i < lena; i++) {
+        a[int(stringA[i])]++;
+    }
+    for (int j = 0; j < lenb; j++) {
+        b[int(stringB[j])]++;
+    }
+    for (int m = 0; m < 256; m++) {
+        if (a[m] != b[m]) {
+        flag=false;
+            break;
+        }
+ 
+    }
+    return flag;
+     
+    }
+};
