@@ -1,0 +1,18 @@
+import java.util.ArrayList;
+  
+public class Solution {
+    public ArrayList<Integer> grayCode(int n) {
+        ArrayList<Integer> al = new ArrayList<>();
+        al.add(0);
+        int size;
+        int temp;
+        for(int i = 0; i < n; ++i){
+            size = al.size();
+            for(int j = size - 1; j >=0; --j){
+                temp = al.get(j);
+                al.add(temp + (int)Math.pow(2,i));
+            }
+        }
+        return al;
+    }
+}
