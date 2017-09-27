@@ -1,0 +1,24 @@
+class StringFormat {
+public:
+    string formatString(string A, int n, vector<char> arg, int m) {
+        // write code here
+        string B;
+        int k=0;
+    for (int i = 0; i < n; i++)
+    {
+        if (A[i] != '%') {
+            B = B + A[i];
+        }
+        else {
+            i = i + 1; //bug i=i+2;
+            B = B + arg[k];
+            k++;
+        }
+    }
+        for (int j = k; j < m; j++) {
+        B = B + arg[j];
+    }
+        return B;
+         
+    }
+};
