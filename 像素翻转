@@ -1,0 +1,29 @@
+class Transform {
+public:
+    vector<vector<int> > transformImage(vector<vector<int> > mat, int n) {
+        // write code here
+     //   int   n = sizeof(mat[0]) / sizeof(int);
+    int temp;
+    for(int i = 0; i<n; i++) {
+        for (int j = 0; j < n-i-1; j++) {
+            temp = mat[n - j - 1][n - i - 1];
+            mat[n - j - 1][n - i - 1] = mat[i][j];
+            mat[i][j] = temp;
+                }
+        }
+    for(int i = 0; i<n/2; i++) {
+        for (int j = 0; j <n; j++) {
+            temp = mat[n - i - 1][j];
+            mat[n - i - 1][j] = mat[i][j];
+            mat[i][j] = temp;
+                }
+        }
+        return mat;
+    //for (int i = 0; i < n; i++) {
+    //  for (int j = 0; j < n; j++) {
+    //      cout << mat[i][j];
+    //  }
+    //  cout << endl;
+    //}
+    }
+};
