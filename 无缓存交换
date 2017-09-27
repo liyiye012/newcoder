@@ -1,0 +1,10 @@
+class Exchange {
+public:
+    vector<int> exchangeAB(vector<int> ab) {
+        // write code here
+        ab[0]=ab[0]+ab[1];
+        ab[1]=ab[0]-ab[1];
+        ab[0]=ab[0]-ab[1];
+        return ab;
+    }
+};
