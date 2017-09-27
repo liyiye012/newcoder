@@ -1,0 +1,16 @@
+class MaxDivision {
+public:
+    int findMaxDivision(vector<int> A, int n) {
+        // write code here
+ int difference=0,max=0;
+    vector<int> B = A;
+    sort(B.begin(),B.end());
+    for (int i = 1; i < n; i++) {
+        difference = B[i] - B[i - 1];
+        if (difference > max) {
+            max = difference;
+        }
+    }
+    return   max;
+    }
+};
