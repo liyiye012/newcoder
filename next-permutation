@@ -1,0 +1,37 @@
+public class Solution {
+    public void nextPermutation(int[] num){
+        if(num.length<=1||num==null) return;
+        int pos=-1;
+        for(int i=num.length-2;i>=0;i--){
+            if(num[i]<num[i+1]){
+                pos=i;
+                break;
+            }
+        }
+        if(pos!=-1){
+        for(int j=num.length-1;j>=pos;j--){
+            if(num[j]>num[pos]){
+                int temp=num[j];
+                num[j]=num[pos];
+                num[pos]=temp;
+                reverse(num,pos+1,num.length-1);
+                break;
+            }
+        }
+        }
+        else{
+            reverse(num,pos+1,num.length-1);
+        }
+    }
+    public void reverse(int[] num,int start,int end){
+        int head=start;
+        int tail=end;
+        while(head<tail){
+            int temp=num[head];
+            num[head]=num[tail];
+            num[tail]=temp;
+            head++;
+            tail--;
+        }
+    }
+}
