@@ -1,0 +1,26 @@
+class StringPattern {
+public:
+    int findAppearance(string A, int lena, string B, int lenb) {
+        // write code here
+    int  pos=-1;
+  
+    for (int i = 0; i < lena-lenb+1; i++) {
+        if (lenb == 1) {
+            if (A[i] == B[0]) {pos = i; break;}
+        }
+        else if (A[i] == B[0]) {
+            bool flag = true;//开始的bug在于每次循环都要重置flag为true
+            for(int j = 1;j<lenb;j++) {
+                if (A[j+i] != B[j]) {
+                    flag = false;
+                    break;
+                }
+                 
+            }
+            if (flag == true) { pos = i; break; }//注意循环位置
+        }
+ 
+    }
+    return pos;
+    }
+};
