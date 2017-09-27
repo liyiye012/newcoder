@@ -1,0 +1,10 @@
+class ReverseEqual {
+public:
+    bool checkReverseEqual(string s1, string s2) {
+        // write code here
+            string str = s1 + s1;
+            if (s1.length() == 0 || s2.length() == 0) return false;
+    if (str.find(s2) == -1) return false;
+    else return true;
+    }
+};
