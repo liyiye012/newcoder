@@ -1,0 +1,24 @@
+class Zipper {
+public:
+    string zipString(string iniString) {
+        // write code here
+        string str;
+        int len=iniString.length();
+        int i=0;
+        while(i<len){
+            int j=i+1;
+            int count=1;
+            while(iniString[j]==iniString[i]) {
+                i++;
+                j++;
+                count++;
+            }
+            str=str+iniString[i];
+            str=str+to_string(count);
+            i++;
+        }
+        int newlen=str.length();
+        if(len<=newlen) return iniString;
+        else return str;
+    }
+};
