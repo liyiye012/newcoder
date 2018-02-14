@@ -1,0 +1,29 @@
+class Replacement {
+public:
+    string replaceSpace(string iniString, int length) {
+        // write code here
+        int spacecount=0;
+        for(int i=0;i<length;i++){
+            if(iniString[i]==' ') spacecount++;
+        }
+        int newlength=2*spacecount+length;
+        //string String=new string(iniString);
+        iniString.resize(newlength);
+        int p1=length,p2=newlength;
+        while(p1<p2){
+            if(iniString[p1]!=' '){
+                iniString[p2]=iniString[p1];
+                p2--;
+                p1--;
+            }
+            else if(iniString[p1]==' '){
+                iniString[p2--]='0';
+                iniString[p2--]='2';
+                iniString[p2--]='%';
+                p1--;
+            }
+        }
+        
+        return iniString;
+    }
+};
