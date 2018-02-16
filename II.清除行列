@@ -1,0 +1,33 @@
+class Clearer {
+public:
+    vector<vector<int> > clearZero(vector<vector<int> > mat, int n) {
+        // write code here
+        //error: vector<vector<char>> res(n,n);
+         //int m=mat.size();
+        //int n=mat[0].size();
+        int m=n;
+        bool *row=new bool[m];
+        bool *col=new bool[n];
+        for(int i=0;i<m;i++){
+            row[i]=false;
+        }
+        for(int j=0;j<n;j++){
+            col[j]=false;
+        }
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(mat[i][j]==0) {
+                    row[i]=true;           
+                    col[j]=true;
+                }
+            }
+        }
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(row[i] || col[j])
+                    mat[i][j]=0;
+            }
+        }
+        return mat;
+    }
+};
