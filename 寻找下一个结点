@@ -1,0 +1,36 @@
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};*/
+
+class Successor {
+public:
+    int findSucc(TreeNode* root, int p) {
+        // write code here
+        vector<int> res;
+        if(root==NULL) return -1;
+        TreeNode *pCurrent=root;
+        stack<TreeNode *> treestack; 
+        while(pCurrent || !treestack.empty()){
+            if(pCurrent){
+                treestack.push(pCurrent);
+                pCurrent=pCurrent->left;
+            }
+            else{
+                TreeNode *pNode=treestack.top();
+                res.push_back(pNode->val);
+                treestack.pop();
+                pCurrent=pNode->right;
+            }
+        }
+        for(int i=0;i<res.size();i++){
+            if(res[i]==p) return res[i+1];
+        }
+        return -1;
+    }
+};
