@@ -1,0 +1,108 @@
+#include<iostream>
+#include<vector>
+#include<stack>
+#include<deque>
+using namespace std;
+int main() {
+    /*first edition wants to use three stack to simulate the big and two small card heap
+    but if we cout the middle result we will find it's reverse
+    so we need to use the queue to simulate the card heap*/
+    //int T = 0, n = 0, k = 0;
+    //cin >> T;
+    ////error while (cin >> T ) {
+    //for (int i = 0; i<T; i++) {
+    //    //error: while (cin >> n >> k ) {
+    //    cin >> n >> k;
+    //    stack<int> s1, s2, S;
+    //    //potential error: int pos = 0;
+    //    for (int j = 0; j<2 * n; j++) {
+    //        int pos = 0;
+    //        cin >> pos;
+    //        S.push(pos);
+    //    }
+    //    for (int m = 0; m<k; m++) {
+    //        //分成两堆
+    //        for (int jjj = n; jjj<2 * n; jjj++) {
+    //            int stop = S.top();
+    //            s2.push(stop);
+    //            cout << "s2.push=" << stop << endl;
+    //            S.pop();
+    //        }
+    //        for (int jj = 0; jj<n; jj++) {
+    //            int stop = S.top();
+    //            s1.push(stop);
+    //            cout << "s1.push" << stop << endl;
+    //            S.pop();
+    //        }
+    //        //开始洗牌
+    //        for (int ii = 0; ii<n; ii++) {
+    //            int s2value = s2.top();
+    //            S.push(s2value);
+    //            cout << "S.push" << s2value << endl;
+    //            int s1value = s1.top();
+    //            cout << "S.push" << s1value << endl;
+    //            S.push(s1value);
+    //            s1.pop();
+    //            s2.pop();
+    //        }
+    //    }
+    //    //end
+    //    while (!S.empty()) {
+    //        int c = S.top();
+    //        S.pop();
+    //        if (S.size() != 1) cout << c << " ";
+    //        else cout << c << endl;
+    //    }
+    //}
+    //cout << "Began to shuffle" << endl;
+    //return 0;
+    int T = 0, n = 0, k = 0;
+    cin >> T;
+    for (int i = 0; i<T; i++) {
+        cin >> n >> k;
+        deque<int> s1, s2, S;
+        for (int j = 0; j<2 * n; j++) {
+            int pos = 0;
+            cin >> pos;
+            S.push_back(pos);
+            //cout << "S.push_back" << pos << endl;
+        }
+        for (int m = 0; m<k; m++) {
+            //分成两堆
+            for (int jj = 0; jj<n; jj++) {
+                int stop = S.front();
+                s1.push_back(stop);
+               // cout << "s1.push_back=" << stop << endl;
+                S.pop_front();
+            }
+            for (int jjj = n; jjj<2 * n; jjj++) {
+                int stop = S.front();
+                s2.push_back(stop);
+               // cout << "s2.push_back=" << stop << endl;
+                S.pop_front();
+            }
+            
+            //开始洗牌 要从头插入当成栈使用
+            for (int ii = 0; ii<n; ii++) {
+                int s2value = s2.back();
+                S.push_front(s2value);
+              //  cout << "S.push_front" << s2value << endl;
+                int s1value = s1.back();
+               // cout << "S.push_front" << s1value << endl;
+                S.push_front(s1value);
+                s1.pop_back();
+                s2.pop_back();
+            }
+        }
+        //end
+        //输出不能反
+        while (!S.empty()) {
+            int c = S.front();
+            if (S.size() != 1) cout << c << " ";
+            else cout << c << endl;
+            S.pop_front();
+        }
+
+    }
+    return 0;
+}
