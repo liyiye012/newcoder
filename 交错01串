@@ -1,0 +1,43 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int main(){
+    string s;
+    cin>>s;
+    int len=s.size();
+    string s2="01";
+    string s1="";
+    for(int i=0;i<len;i++){
+        s1=s1+s2;
+    }
+    int len1=s1.size();
+    //cout<<" s="<<s<<endl<<"s1="<<s1<<endl;
+    int **matrix=new int *[len+1];// 申请int*类型数组的内存空间，赋值给（int*）*类型的matrix
+    for(int i=0;i<len+1;i++){
+        matrix[i] = new int[len1+1];// 分别给int*类型的数组申请空间，即一维数组的动态申请。
+    }
+    for(int i=0;i<len+1;i++){
+        matrix[i][0]=0;
+    }
+    for(int j=0;j<len1+1;j++){
+        matrix[0][j]=0;
+    }
+    int maxvalue=0;
+    //求最大公共子串
+    for(int i=1;i<len+1;i++){
+        for(int j=1;j<len1+1;j++){
+           //error: 此处i和j与实际字符串中的i和j相差1 if(s[i]==s1[j]) matrix[i][j]=matrix[i-1][j-1]+1;
+            if(s[i-1]==s1[j-1]) matrix[i][j]=matrix[i-1][j-1]+1;
+            else matrix[i][j]=0;
+            //cout<<"matrix["<<i<<"]["<<j<<"]="<<matrix[i][j]<<" ";
+            maxvalue=max(maxvalue,matrix[i][j]);
+        }
+        //cout<<endl;
+    }
+    for(int i=0;i<len;i++){//释放内存
+        delete[] matrix[i];
+    }
+    delete [] matrix;
+    cout<<maxvalue;
+    return 0;
+}
