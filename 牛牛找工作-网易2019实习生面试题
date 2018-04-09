@@ -1,0 +1,65 @@
+#include<iostream>
+#include<algorithm>
+#include<cmath>
+using namespace std;
+struct Work
+{
+    int di;
+    int pi;
+}work[101000];
+struct Student {
+    int ai;
+    int id;
+}student[101000];
+//work 和 student 可以作为结构体节点；
+//work按照工作难度（di）从小到大排序，如果遇到相同的难度则按照薪资（pi）从大到小排序；
+//student按照学生的能力从小到大排序，同时给student增加id标识，以便后期正确输出；
+//为每个学生寻找符合其工作能力的最大薪资工作，因为工作和学生是排序好的，
+//所以下一个学生的能力一定是大于上一个学生的能力，下一个工作的要求也是要高于上一个工作的要求，
+//所以在计算下一个学生的时候，只需在上一个基础上继续进行，要么其和上一个同学相同，
+//要么会得到要求更高，薪资更高的工作。
+bool compWork(Work a, Work b) {
+    if (a.di == b.di) return a.pi > b.pi;//如果遇到相同的难度则按照薪资（pi）从大到小排序；
+    else return a.di < b.di;//work按照工作难度（di）从小到大排序，
+}
+bool compStudent(Student a, Student b) {
+    return a.ai < b.ai;//student按照学生的能力从小到大排序，同时给student增加id标识，以便后期正确输出；
+}
+int n, m;
+int max_pi[101000];
+
+int main() {
+    cin >> n >> m;
+    for (int i = 0; i < n; i++) {
+        cin >> work[i].di >> work[i].pi;
+    }
+    sort(work, work + n, compWork);
+    cout << endl << " work  sort result:" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << work[i].di << "  " << work[i].pi << endl;
+    }
+    for (int i = 0; i < n; i++) {
+        max_pi[i] = 0;
+    }
+    for (int i = 0; i < m; i++) {
+        cin >> student[i].ai;
+        student[i].id = i;
+    }
+    sort(student, student + m, compStudent);
+    cout << endl << "  student sort result:" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << student[i].ai << "  " << student[i].id << endl;
+    }
+    int workNum = 0, ans = 0;
+    for (int i = 0; i < m; i++) {
+        while (workNum < n && student[i].ai >= work[workNum].di) {
+            ans = max(work[workNum].pi, ans);
+            workNum++;
+        }
+        max_pi[student[i].id] = ans;
+    }
+    for (int i = 0; i < m; i++) {
+        cout << max_pi[i]<<endl;
+    }
+    return 0;
+}
