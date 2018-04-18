@@ -1,0 +1,44 @@
+#include<string>
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<vector>
+using namespace std;
+const int maxn=7;
+char site[maxn]={0};
+string str;
+void solve(int num){
+    if(num==str.length()){
+        for(int i=0;i<str.length();i++){
+            cout<<site[i];
+        }
+        cout<<endl;
+    }
+    else{
+        int flag=0;
+        char tmp;
+        for(int i=0;i<str.length();i++){
+            tmp=str[i];
+            flag=0;
+            for(int j=0;j<num;j++){
+                if(site[j]==tmp){
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==1)continue;
+            site[num]=str[i];
+            solve(num+1);
+        }
+    }
+}
+int main(){
+    
+    while(cin>>str){
+    int len=str.length();
+    sort(str.begin(),str.end());
+    solve(0);
+    cout<<endl;
+    }
+    return 0;
+}
