@@ -1,0 +1,67 @@
+#include<iostream>
+#include<string>
+#include<queue>
+using namespace std;
+/*
+单词接龙
+问题描述：拉姆刚刚开始学习英文字母，对单词排序很感兴趣，他能够迅速确定是否可以将这些单词排列在一个列表中，
+使得该列表中任何单词的首字母与前一个单词的尾字母相同，力能编写一个计算机程序帮助拉姆进行判断吗？  
+  
+函数canArrangeWords的输入包含一个整数num和一个单词arr。num表示列表中单词的数目（1<=num<=100），
+而arr应包含只由’a’-‘z’组成的单词(2<=arr中单词长度<=100)  
+  
+如果列表中的单词可按照要求的方式排列，返回1；否则返回-1。
+在这种排列中，列表中的第一个单词可以任意字母开头，不需要满足约束条件。  
+  
+测试用例：   
+TestCase 1:Input:4, [abcd,defg,ghij,jkl] Expected Return Value:1   
+TestCase 2: Input: 4,[ghij,defg,jkl,abcd] Expected Return Value:-1 
+问题分析：
+
+
+1.定义两个变量，代表当前匹配通过的start和end
+2.对于下一个word来说，有可能是首尾匹配，也有可能是尾首匹配，分别更新start和end即可。
+3.如果下一个word跟当前不匹配，我们把当且word放入容器的尾部（因为可能会在后面完成匹配）
+4.如此循环，所有都匹配成功，或者匹配和不匹配的单词总数超过单词总数
+5.根据上述1-4步骤，很容易联想到用队列作为数据结构。
+*/
+int canArrangeWords(int num, char **arr) {
+    if (num < 1 || num>100) return -1;
+    queue<string> qs;
+    for (int i = 0; i < num; i++) {
+        qs.push(arr[i]);
+        int len = strlen(arr[i]);
+        if (len < 2 || len>100) return -1;
+    }
+    int count = 1;
+    int countr = 0;
+    char head = qs.front().at(0);
+    char end = qs.front().at(strlen(arr[0]) - 1);
+    qs.pop();
+    while (!qs.empty() && (count + countr <= num)) {
+        int len = strlen(qs.front().c_str());
+        if (qs.front().at(0) == end) {
+            end = qs.front().at(len - 1);
+            qs.pop();
+            count++;
+        }
+        else if (qs.front().at(len - 1) == head) {
+            head = qs.front().at(0);
+            qs.pop();
+            count++;
+        }
+        else {
+            qs.push(qs.front());
+            qs.pop();
+            countr++;
+        }
+    }
+    if (count == num) return 1;
+    return -1;
+}
+int main() {
+    char *c[] = { "abcd","defg","ghij","jkl" };
+    char **ch = c;
+    cout << canArrangeWords(4, ch) << endl;
+    return 0;
+}
