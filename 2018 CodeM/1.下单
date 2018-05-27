@@ -1,0 +1,53 @@
+#include <iostream>
+#include <cstdio>
+#include<vector>
+#include<unordered_map>
+#include<math.h>
+using namespace std;
+double tejiaprice(unordered_map<int, int> tejia) {
+    double price = 0;
+    for (auto tj:tejia) {
+        if (tj.second == 1) price += tj.first*0.8;
+        else if (tj.second == 0) price += tj.first;
+    }
+    return price;
+}
+double manjianprice(unordered_map<int, int> manjian,int all) {
+    double price = double(all);
+    for (auto mj : manjian) {
+        if (mj.first <= all) {
+            price = price <= (all - mj.second) ? price: (all - mj.second);
+        }
+    }
+    return price;
+}
+int main() {
+    //freopen("1.in","r",stdin);
+    int n, m;
+    cin >> n >> m;
+    unordered_map<int, int> tejia;
+    int i = 0;
+    while (i < n) {
+        i++;
+        int ai, flag;
+        cin >> ai >> flag;
+        tejia[ai] = flag;
+    }
+    unordered_map<int, int> manjian;
+    int j = 0;
+    while (j < m) {
+        j++;
+        int bi, ci;
+        cin >> bi >> ci;
+        manjian[bi] = ci;
+    }
+    int all = 0;
+    for (auto tj : tejia) {
+        all += tj.first;
+    }
+    double minprice = tejiaprice(tejia);
+    double temp = manjianprice(manjian, all);
+    minprice = minprice>=temp ? temp: minprice;
+    printf("%.2f", minprice);
+    return 0;
+}
