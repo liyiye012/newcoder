@@ -1,0 +1,23 @@
+#include <iostream>
+#include <cstdio>
+#include<vector>
+#include<unordered_map>
+#include<math.h>
+
+using namespace std;
+
+int main() {
+    //freopen("1.in","r",stdin);
+    int n, m, k;
+    cin >> n >> m >> k;
+    vector<pair<int, int>> happy;
+    int i = 0;
+    while (i < k) {
+        i++;
+        int mei, tuan;
+        cin >> mei >> tuan;
+        happy.push_back(make_pair(mei, tuan));
+    }
+
+    return 0;
+}
