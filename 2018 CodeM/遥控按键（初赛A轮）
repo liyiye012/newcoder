@@ -1,0 +1,79 @@
+#include <iostream>
+#include <cstdio>
+#include<vector>
+#include<string>
+
+using namespace std;
+//2018CodeM现场提交代码
+int index(vector < vector<vector<char>> > &code, char c) {
+    int index = 0;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            for (int m = 0; m < code[i][j].size(); m++) {
+                if (code[i][j][m] == c) index = 3 * i + j;
+            }
+        }
+    }
+    return index;
+}
+int distance(int a, int b) {
+    int dis = 0;
+    int x1 = a / 3;
+    int y1 = a % 3;
+    int x2 = b / 3;
+    int y2 = b % 3;
+    int disx = (x2 - x1 >= 0) ? x2 - x1 : x1 - x2;
+    int disy = (y2 - y1 >= 0) ? y2 - y1 : y1 - y2;
+    dis = disx + disy;
+    return dis;
+}
+int solve(vector < vector<vector<char>> > &code, string s,vector<vector<int>> distan) {
+    int num = 0;
+    num += distan[0][ index(code,s[0])];
+    for (int i = 1; i < s.size(); i++) {
+        num += distan[index(code, s[i])][ index(code, s[i-1])];
+    }
+    return num;
+}
+int main() {
+    //freopen("in.txt","r",stdin);
+    int T;
+    vector<string> movie;
+    vector<char> w1; w1.push_back('@'); w1.push_back('!'); w1.push_back(':');
+    vector<char> w2; w2.push_back('A'); w2.push_back('B'); w2.push_back('C');
+    vector<char> w3; w3.push_back('D'); w3.push_back('E'); w3.push_back('F');
+    vector<char> w4; w4.push_back('G'); w4.push_back('H'); w4.push_back('I');
+    vector<char> w5; w5.push_back('J'); w5.push_back('K'); w5.push_back('L');
+    vector<char> w6; w6.push_back('M'); w6.push_back('N'); w6.push_back('O');
+    vector<char> w7; w7.push_back('P'); w7.push_back('Q'); w7.push_back('R'); w7.push_back('S');
+    vector<char> w8; w8.push_back('T'); w8.push_back('U'); w8.push_back('V');
+    vector<char> w9; w9.push_back('W'); w9.push_back('X'); w9.push_back('Y'); w9.push_back('Z');
+    vector<vector<char>> line1; line1.push_back(w1); line1.push_back(w2); line1.push_back(w3);
+    vector<vector<char>> line2; line2.push_back(w4); line2.push_back(w5); line2.push_back(w6);
+    vector<vector<char>> line3; line3.push_back(w7); line3.push_back(w8); line3.push_back(w9);
+    vector<vector<vector<char>>> code; code.push_back(line1); code.push_back(line2); code.push_back(line3);
+    //cout << code[2][1].size() << endl;
+    //cout << index(code, 'M') << endl;
+    //cout << distance(5, 1);
+    vector<vector<int>> distan;
+    //calculate the distance
+    for (int i = 0; i < 9; i++) {
+        vector<int> temp;
+        for (int j = 0; j < 9; j++) {
+            temp.push_back(distance(i, j));
+        }
+        distan.push_back(temp);
+    }
+    cin >> T;
+    for (int i = 0; i < T; i++) {
+        string s;
+        cin >> s;
+        movie.push_back(s);
+    }
+    for (int j = 0; j < T; j++) {
+        int num = 0;
+        num = solve(code, movie[j], distan);
+        cout << num << endl;
+    }
+    return 0;
+}
