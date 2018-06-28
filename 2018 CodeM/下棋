@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 100003;
+int x[N], y[N];
+int main() {
+    ios::sync_with_stdio(false);//取消cin于stdin的同步
+    cin.tie(nullptr); cout.tie(nullptr);
+    //在默认的情况下cin绑定的是cout
+    //每次执行 << 操作符的时候都要调用flush，这样会增加IO负担。
+    //可以通过tie(0)（0表示NULL）来解除cin与cout的绑定，进一步加快执行效率
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> x[i];
+    }
+    for (int i = 1; i <= n; ++i) {
+        cin >> y[i];
+        x[i] -= y[i];
+    }
+    long long ans = 0;
+    //开始从右往左走
+    for(int i = n; i >= 2; i--){
+        if(x[i] > 0)
+        {
+            x[i - 1] += x[i];
+            ans += 1ll * x[i];
+            x[i] = 0;//清零
+        }
+    }
+    //开始从左往右走
+    for(int i = 1; i < n; i++){
+        if(x[i] > 0)
+        {
+            x[i + 1] += x[i];
+            ans += 1ll * x[i];
+            x[i] = 0;
+        }
+    }
+    cout << ans << endl;
+    return 0;
+}
