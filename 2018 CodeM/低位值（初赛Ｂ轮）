@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+#define N 20100
+typedef long long ll;
+typedef unsigned long long ull;
+using namespace std;
+/*
+    先对这个函数进行解释：设l,r的前ｋ位是相同的,第ｋ＋１位ｌ是０，r是１。
+    那么ｒ会把最低位的若干个１消除知long(lowbit(r))=k+1后减１．
+    然后l,r的最长公共前缀增加，重复这个过程。
+    为了让答案尽可能大，显然l除掉前k位以后剩下的是0000000...1
+    （这样可以让最长公共前缀增加的最慢）
+    并且ｋ肯定越小越好（这样该过程可以重复更多次）。
+    从ｒ的角度，ｒ除掉前ｋ以后必然剩下11111...1．因此最优解去在l=1,ｒ=111111...1上，
+    使用模拟或递推均可
+*/
+int main()
+{
+    string str;
+    cin >> str;
+    int ans = 0;
+    int num1 = 0;  //num1是直接以n作为r计算的
+    int num2 = 0;  //num2是比n小的，但是总的后面的1比n所计算的多
+    if (str == "1")
+    {
+        cout << "1" << endl;
+        return 0;
+    }
+    for (int i = 1; i < str.size(); i++)  //直接算n除第一个外有多少个1
+    {
+        if (str[i] == '1')
+            num1++;
+    }
+    if (num1 == 0)  num2 = 0;  //非第一个无1，那么就不必处理
+    else
+    {
+        for (int i = 1; i < str.size(); i++)
+        {
+            if (str[i] == '1')//找到第一个1，置零，后面全置一
+            {
+                num2 = str.size() - (i+1);  //这里是直接将处理的数变换到全1进行计算
+                break;
+            }
+        }
+    }
+    ans = max(num1,num2)+(1 + str.size() - 1)* (str.size() - 1)/ 2;  //从1111 到111加上了4
+    cout << ans << endl;
+    return 0;
+}
