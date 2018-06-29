@@ -1,0 +1,170 @@
+#include <iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+   
+const int maxn = 5005;
+const int INF = 0x3f3f3f3f;
+   
+struct node_n
+{
+    int x;//下标为x的地点
+    int day;//日期
+    string time;//时间
+    bool operator < (const node_n &p)const
+    {
+        if(day == p.day)
+            return time < p.time;
+        return day < p.day;
+               
+    }
+}a[12];
+struct node_m
+{
+    int s;//起始地点
+    int t;//终止地点
+    string s_time;//发车日期
+    string e_time;//到站日期
+    int day;
+    int w;//价格
+    int res = 0;
+    bool operator < (const node_m &p)const
+    {
+        if(day == p.day)
+        {
+            return s_time < p.s_time;　//按照发车时间进行排序
+        }
+        return day < p.day;
+    }
+}e[maxn * 7];
+int dp[maxn * 7];
+void split(string &str, int &day ,string &time)
+{
+    vector<string>res;
+    string tmp;
+    for(int i = 0; i < str.size(); i++)
+    {
+        if(str[i] == ' ')
+        {
+            res.push_back(tmp);
+            tmp = "";
+               
+        }
+        else
+        {
+            tmp += str[i];
+        }
+    }
+    res.push_back(tmp);
+    day = res[0][tmp.size() - 1] - '0';
+    time = tmp[1];
+}
+int main()
+{
+    int n, m, k;
+    cin >> n >> m >> k;
+    for(int i = 1; i <= n; i++)
+    {
+        string str;//date
+        cin >> a[i].x >> str >> a[i].time;
+        a[i].day = str[str.size() - 1] - '0';//因为给出的日期都在7.1~7.7之间，因此只需最后一个字符
+    }
+    a[0].x = 1;
+    a[0].day = 0;
+    a[0].time = "23:59:59.999";
+    sort(a, a + 1 + n);//按照时间升序排列
+    for(int i = 1; i <=m; i++)
+    {
+        cin >> e[i].s >> e[i].t >> e[i].w >> e[i].s_time >> e[i].e_time;
+        e[i].day = 1;//当日出发当日结束
+    }
+    //题目跨度只有７天，所有公交线路加起来只会开7m次
+     //而且我们知道哪些线路之间可以换乘，我们把这7m次行程按照他们的时间进行排序，
+      //用f[i][j]标志完成前i个任务，目前刚刚结束行程j时的最小花费dp即可
+    for(int j = 1; j <= 6; j++)//排列出７天中７ｍ次的公交线路
+    {
+        for(int i = 1; i <= m; i++)
+        {
+            e[j * m + i] = e[i];
+            e[j * m + i].day = j + 1;
+        }
+    }
+       
+    m *= 7;
+    sort(e + 1, e + 1 + m);//升序排列
+    int sum = 0;//总花费
+      
+    for(int i = 1; i <= n ;i++)//针对每一次配送任务
+    {
+        //cout << a[i].x <<" " << a[i - 1].x << endl;
+        if(a[i].x == a[i - 1].x)
+        {
+            continue;
+        }
+        int ans = INF;
+        for(int j = 1;j <= m; j++)
+        {
+            dp[j] = INF;
+        }
+           
+        for(int j = 1; j <= m; j++)//遍历所有公交线路
+        {
+            //只要公交线路起始时间晚于上一次配送任务起始时间ｒｅｓ＝１否则为０
+            int res = (e[j].s_time >= a[i - 1].time && e[j].day == a[i - 1].day) || e[j].day > a[i -1].day;
+            //公交线路终止时间早于下一次配送任务时间res=1否则为０
+            res = res && ((e[j].e_time <= a[i].time && e[j].day == a[i].day) ||e[j].day < a[i].day);
+            //cout << e[j].day << " " << e[j].s << " " << res << endl;
+            if(res)
+            {
+                e[j].res = 1;//res为１时代表时间上满足配送要求
+            }
+            else
+            {
+                e[j].res = 0;
+            }
+            if(e[j].res && e[j].s == a[i - 1].x)//时间地点均满足配送要求
+            {
+                dp[j] = e[j].w;//记录花费价格
+            }
+        }
+        //遍历所有公交线路，寻找中间可以跳过的路线
+        for(int j = 1; j <=m; j++)
+        {
+            if(e[j].res == 0)continue;
+             
+            for(int k = 1; k < j ; k++)
+            {
+                //cout << e[j].day << " " << e[k].day << e[k].t  << " "<< e[j].s << endl;
+                if(e[k].res == 0)continue;
+                //公交ｋ的终点与公交ｊ的起点相同而且ｊ的出发时间晚于ｋ的到站时间
+                if(e[k].t == e[j].s && (e[j].s_time > e[k].e_time || e[j].day > e[k].day))
+                {
+                    //比较原有ｊ的花费和从k点直接乘坐公交ｊ的花费哪个小
+                   // cout << e[j].t << " " << j << " "<< dp[k] << endl;
+                    dp[j] = min(dp[j], dp[k] + e[j].w);
+                }
+            }
+            //统计花费之前的花费
+            //如果公交线路ｊ的终点和配送任务ｉ的地点相同，则看是否已经乘坐过ｊ
+            if(e[j].t == a[i].x)
+            {
+                //cout << 1 << endl;
+                ans = min(ans, dp[j]);
+            }
+        }
+        //cout << ans << endl;
+        //开始统计当前公交线路是否被乘坐过
+        if(ans == INF)//未乘坐过
+        {
+            cout << -1 << endl;
+            return 0;
+        }
+        else//　乘坐过加入花费
+        {
+            sum += ans;
+        }
+                          
+    }
+    cout << sum << endl;
+    return 0;
+}
