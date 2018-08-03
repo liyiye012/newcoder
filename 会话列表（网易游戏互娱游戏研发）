@@ -1,0 +1,51 @@
+#include<iostream>
+#include<vector>
+#include<stack>
+#include<unordered_set>
+using namespace std;
+void output(stack<int> sta){
+    while(!sta.empty()){
+        int temp=sta.top();
+        cout<<temp;
+        sta.pop();
+        if(!sta.empty()) cout<<" ";
+        else cout<<endl;
+    }
+    
+}
+int main(){
+    int T;
+    cin>>T;
+    for(int i=0;i<T;i++){
+        int N;
+        cin>>N;
+        int *num=new int[N];
+        for(int j=0;j<N;j++){
+            cin>>num[j];
+        }
+        unordered_set<int> set;
+        stack<int> sta1,sta2;
+        for(int i=0;i<N;i++){
+            if(set.count(num[i])==0){
+                set.insert(num[i]);
+                sta1.push(num[i]);
+            }
+            else if(set.count(num[i])!=0){
+                while(sta1.top()!=num[i]){
+                    sta2.push(sta1.top());
+                    sta1.pop();
+                }
+                int temp=sta1.top();
+                sta1.pop();
+                while(!sta2.empty()){
+                    sta1.push(sta2.top());
+                    sta2.pop();
+                }
+                sta1.push(temp);
+            }
+        }
+        output(sta1);
+        delete []num;
+    }
+    return 0;
+}
