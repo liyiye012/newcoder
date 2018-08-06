@@ -1,0 +1,56 @@
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
+bool compare(string target, string a) {
+    if (target.size() != a.size()) return false;
+    for (int i = 0; i < target.size(); i++) {
+        if (target[i] != a[i]) return false;
+    }
+    return true;
+}
+int search(vector<string> dic, string target, int m, int n) {
+    int sol = 0;
+    int len = target.size();
+    for (int i = 0; i < m; i++) {
+        for (int j = 0;j < n; j++) {
+            //cout << "i=" << i << "   j=" << j << endl;
+            string a = "", b = "", c = "";
+            if (i + len - 1 < m) for (int k = i; k < i + len; k++) a += dic[k][j];
+            if (j + len - 1 < n) for (int k = j; k < j + len; k++) b += dic[i][k];
+            if ((i + len - 1 < m) && (j + len - 1 < n)) for (int k = 0; k < len; k++) c += dic[i + k][j + k];
+            if (compare(target, a)) { 
+                //cout << "i=" << i << "   j=" << j << endl;
+                sol++; }
+            if (compare(target, b)) { 
+               // cout << "i=" << i << "   j=" << j << endl;
+                sol++; }
+            if (compare(target, c)) { 
+               // cout << "i=" << i << "   j=" << j << endl;
+                sol++; }
+        }
+    }
+    return sol;
+}
+int main() {
+    int T;
+    freopen("in.txt", "r", stdin);
+    cin >> T;
+    for (int i = 0; i < T; i++) {
+        int m, n;
+        cin >> m >> n;
+        string s;
+        vector<string> dic;
+        for (int i = 0; i < m; i++) {
+            cin >> s;
+            dic.push_back(s);
+        }
+        string target;
+        cin >> target;
+        int sol = search(dic, target, m, n);
+        cout << sol << endl;
+    }
+
+
+    return 0;
+}
