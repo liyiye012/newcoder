@@ -1,0 +1,102 @@
+#include<iostream>
+#include<vector>
+#include<cmath>
+#include<algorithm>
+using namespace std;
+int hengmax(vector<vector<int>> num, int N, int D) {
+    int maxval = 0;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N-D+1; j++) {
+            
+            int tempmax = 0;
+            int col = 0;
+            while (col<D)
+            {
+                tempmax += num[i][j + col];
+                col++;
+            }
+            maxval = max(maxval, tempmax);
+            
+        }
+    }
+
+    return maxval;
+}
+int shumax(vector<vector<int>> num, int N, int D) {
+    int maxval = 0;
+    for (int i = 0; i < N - D + 1; i++) {
+        for (int j = 0; j < N ; j++) {
+            int tempmax = 0;
+            int col = 0;
+            while (col<  D)
+            {
+                tempmax += num[i + col][j];
+                col++;
+            }
+            maxval = max(maxval, tempmax);
+        }
+    }
+
+    return maxval;
+}
+int lefttoright(vector<vector<int>> num, int N, int D) {
+    int maxval = 0;
+    for (int i = 0; i < N - D + 1; i++) {
+        for (int j = 0; j < N - D + 1; j++) {
+            int tempmax = 0;
+            int col = 0;
+            while (col< D)
+            {
+                tempmax += num[i + col][j + col];
+                col++;
+            }
+            maxval = max(maxval, tempmax);
+        }
+    }
+
+    return maxval;
+}
+int righttoleft(vector<vector<int>> num, int N, int D) {
+    int maxval = 0;
+    for (int i =0; i < N - D + 1; i++) {
+        for (int j = D - 1; j < N ; j++) {
+            //cout << "i=" << i << "    j=" << j;
+            int tempmax = 0;
+            int col = 0;
+            while (col<  D)
+            {
+                tempmax += num[i + col][j - col];
+                col++;
+            }
+            maxval = max(maxval, tempmax);
+          //  cout << "   maxval=" << maxval << endl;
+        }
+    }
+
+    return maxval;
+}
+int maxnum(vector<vector<int>> num,int N,int D) {
+    int heng = hengmax(num, N, D);// cout << "hengmax=" << heng << endl;
+    int shu = shumax(num, N, D); //cout << "shumax=" << shu << endl;
+    int ltor = lefttoright(num, N, D); //cout << "ltor=" << ltor << endl;
+    int rtol = righttoleft(num, N, D);// cout << "rtol=" << rtol << endl;
+    int maxval = max(heng, shu);
+    maxval = max(maxval, ltor);
+    maxval = max(maxval, rtol);
+    return maxval;
+
+}
+int main() {
+
+    freopen("in.txt", "r", stdin);
+    int N, D;
+    cin >> N >> D;
+    vector<vector<int>> num(N, vector<int>(N, 0));
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            cin >> num[i][j];
+        }
+    }
+    cout << maxnum(num,N, D);
+    return 0;
+}
