@@ -1,0 +1,72 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<cstdio>
+#include<cstdlib>
+#include<cstdio>
+#include <string> 
+#include <sstream>
+using namespace  std;
+//void randnum() {
+//    freopen("out.txt", "w", stdout);
+//    for (int k = 0; k < 10; k++) {
+//        string HH = "", MM = "", SS = "";
+//        stringstream stream;
+//        int temp = 0;
+//        temp = rand() % 100;
+//        stream << temp;
+//        stream >> HH;
+//        temp = rand() % 100;
+//        stream << temp;
+//        stream >> MM;
+//        temp = rand() % 100;
+//        stream << temp;
+//        stream >> SS;
+//        string time = "";
+//        time += HH + ":" + MM + ":" + SS;
+//        cout << time << endl;
+//    }
+//    fclose;
+//}
+string check(string &s) {
+    //但有一种情况要注意，当第1位 = 2且第2位>3时，可以第1位不变，第2位置0；也可以第1位置0，第2位不变，显然第2种方法字典序更小
+    bool change = false;
+    if (s[0] - '0' > 2 || s[0] - '0' <0) { s[0] = '0'; change = true; }
+    
+    if (s[0] - '0' == 2 && (s[1] - '0' >= 4 || s[1] - '0'<0)) { s[0] = '0'; change = true; }
+    else if (s[0] - '0' < 2 && (s[1] - '0'>9 || s[1] - '0'<0)) { s[1] = '0'; change = true; }
+        
+    if (s[3] - '0' > 5 || s[3] - '0'<0) { s[3] = '0'; change = true; }
+    else if (s[4] - '0' > 9 || s[4] - '0'<0) { s[4] = '0'; change = true; }
+            
+    if (s[6] - '0' > 5 || s[6] - '0'<0) { s[6] = '0'; change = true; }
+    else if (s[7] - '0' > 9 || s[7] - '0'<0) { s[7] = '0'; change = true; }
+           
+       
+    
+   // if (change)
+    return s;
+}
+int main() {
+    ////创造随机时间 
+    //    randnum();
+
+    int T ;
+    string s;
+    freopen("in.txt", "r", stdin);
+    //freopen("out.txt", "w", stdout);
+    cin >> T;
+    vector<string> res;
+
+    for (int i = 0; i < T; i++) {
+        cin >> s;
+        //getline(cin,s);
+        //char str[1024];
+        //cin.getline(str,1024);
+        res.push_back(check(s));
+
+
+    }
+    for (auto str : res) cout << str << endl;
+    return 0;
+}
