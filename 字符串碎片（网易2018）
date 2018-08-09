@@ -1,0 +1,32 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<unordered_map>
+using namespace std;
+void output(vector<string> s){
+    for(auto c:s) cout<<c<<endl;
+}
+int main(){
+    string s;
+    cin>>s;
+    string temp="";
+    temp+=s[0];
+    vector<string> mp;
+    int i=1;
+    for(;i<s.size();i++){
+        if(s[i]==s[i-1]) {
+            temp+=s[i];
+        }
+        else {
+            mp.push_back(temp);
+            temp="";
+            temp+=s[i];
+        }
+    }
+     mp.push_back(temp);
+    double len=0.0;
+    //output(mp);
+    len=double(s.size())/double(mp.size());
+    printf("%.2f",len);
+    return 0;
+}
