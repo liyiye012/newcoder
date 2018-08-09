@@ -1,0 +1,93 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<unordered_map>
+#include<cstring>
+using namespace std;
+class TrieNode{
+public: bool isKey;
+    TrieNode* children[26];
+    TrieNode():isKey(false){
+        memset(children,NULL,sizeof(TrieNode*) *26);
+    }
+};
+class WordDictionary{
+    public:
+    WordDictionary(){
+        root=new TrieNode();
+    }
+   // ~WordDictionary(){
+     //   delete root;
+    //}
+    void addWord(string word){
+        TrieNode *cur=root;
+        for(char c:word){
+            if(!(cur->children[c-'a'])) cur->children[c-'a']=new TrieNode();
+            cur=cur->children[c-'a'];
+        }
+    }
+    bool search(string word){
+        return query(word.c_str(),root);
+    }
+private:
+    TrieNode *root;
+    bool query(const char* word,TrieNode *node){
+        TrieNode *cur=node;
+        for(int i=0;word[i];i++){
+            if(cur && word[i]!='x'){
+                cur=cur->children[word[i]-'a'];
+            }
+            else if(cur && word[i]=='x'){
+                TrieNode *temp=cur;
+                for(int j=0;j<26;j++){
+                    cur=temp->children[j];
+                    if(query(word+i+1,cur)) return true;
+                }
+            }
+            else break;
+        }
+        return cur && cur->isKey;
+    }
+};
+int main(){
+    int T=0;
+    cin>>T;
+    for(int i=0;i<T;i++){
+        int N,M;
+        cin>>N;
+        unordered_map<string,string> guize;
+        for(int i=0;i<N;i++){
+            string num,addres;
+            cin>>num>>addres;
+            guize[num]=addres;       
+        }
+        cin>>M;
+        vector<string> phone;
+        for(int j=0;j<M;j++){
+            string num;
+            cin>>num;
+            phone.push_back(num);
+        }
+        
+        //start to search
+        WordDictionary obj=new WordDictionary();
+        
+//        obj.addWord(word);
+//        bool is=obj.search(word);
+        
+        for(int i=0;i<M;i++){
+            obj.addWord(phone[i]);
+        }
+        //search
+        for(int i=0;i<M;i++){
+            for(auto gui:guize){
+                if(obj.search(gui.first)) cout<<gui.second<<endl;
+                else cout<<"unknown"<<endl;
+            }
+            
+        }
+    }
+    
+    
+    return 0;
+}
