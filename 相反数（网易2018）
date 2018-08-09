@@ -1,0 +1,23 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+int reverse(int n){
+    int res=0;
+    while(n){
+        res=res*10+n%10;
+        n=n/10;
+    }
+    return res;
+}
+int main(){
+    int n;
+    cin>>n;
+    int rev=reverse(n);
+    cout<<n+rev;
+    return 0;
+}
+添加笔记
+求解答(49)
+收藏
+标记一下
+分享
