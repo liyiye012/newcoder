@@ -7,10 +7,10 @@ int main(){
     cin>>n;
     string s="";
     while(n){
-        if(n& 0x1){
+        if(n& 0x1){ //机器1只能输出奇数
             n=(n-1)/2;
             s+='1';
-        }else{
+        }else{//机器2只能输出偶数
             n=(n-2)/2;
             s+='2';
         }
