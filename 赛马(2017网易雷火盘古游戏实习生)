@@ -1,0 +1,22 @@
+#include<iostream>
+using namespace std;
+/*马匹的速度不同，所以假设为a1>a2>a3......>an
+a1一定能活，概率为1
+a2在a1之后才能活，a2有两种情况:a1之前，a1之后。概率为1/2
+a2在a1，a2之后才能活，a3有三种情况: a1之前，a1，a2之间，a2之后。概率为1/3
+ak在a1....ak-1之后才能活。k种情况，概率为1/k
+an在a1....an-1之后才能活。n种情况，概率为1/n
+即总的期望为1 + 1/2 + 1/3 + .... 1/k + ...1/n,归纳得f(n) = f(n-1) + 1/n
+*/
+double f(int N){
+    if(N==1) return 1;
+    else return f(N-1)+1.0/N;
+}
+int main(){
+    int N=0;
+    cin>>N;
+    double res=0;
+    res=f(N);
+    printf("%.4lf\n",res);
+    return 0;
+}
