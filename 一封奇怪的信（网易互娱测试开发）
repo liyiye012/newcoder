@@ -1,0 +1,28 @@
+#include<iostream>
+#include<unordered_map>
+#include<string>
+using namespace std;
+int main() {
+    unordered_map<char, int> mp;
+    int cnt = 0;
+    for (int i = 0; i < 26; i++) {
+        cin >> cnt;
+        mp['a' + i] = cnt;
+    }
+    string s;
+    cin >> s;
+    int len = 0;
+    int line=1;
+    int lastlen=0;
+    for (int i = 0; i < s.size(); i++) {
+        len += mp[s[i]];
+        lastlen+=mp[s[i]];
+        if(len>100){
+            line++;
+            len=mp[s[i]];
+            lastlen=mp[s[i]];//也就是说如果写下某个字符会导致行宽超过100，那么就要另起一行书写
+        }
+    } 
+    cout << line << " " << lastlen;
+    return 0;
+}
