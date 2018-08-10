@@ -1,0 +1,55 @@
+#include<iostream>
+#include<algorithm>
+#include<string>
+#include<set>
+using namespace std;
+/*根据题意，当且仅当修改距离为 1 时 LCS 最大。很容易证明对于两种基本序列 (()) 和 ()() 都有距离为 1 的合法修改。
+原本想的是对每个左括号，跟每个右括号替换，判断合法后累计。
+后来发现会漏掉一些情况，那就暴力得干脆一点，把每个符号插入到任意位置，判合法，去重，累计。
+更新：我后来想了下，上面的叙述有问题。
+根据题意，要想使得 LCS 最大，删去任意一个字符即可获得 LCS = |s| - 1 ，
+*/
+string str;
+void read(){
+    cin>>str;
+}
+bool test(const string &s){//判合法：实际上就是括号匹配的平衡性。
+    int cnt=0;
+    for(int i=0;s[i];i++){//在这里，如果我们从前到后遍历，左括号可以暂时多于右括号，
+        s[i]=='('? ++cnt: --cnt;//但不可以少于，因为能够闭合右括号的左括号都在左边了。每次成功闭合一对括号把数量 - 1 
+        if(cnt<0){//得到负数说明不平衡。
+            return false;
+        }
+    }
+    return true;
+}
+void work(){
+    set<string> record;//用不能重复的set记录符合要求的子序列
+    //因此最暴力的做法是枚举每个字符，把它插入到任意位置，判合法，去重，累计。
+    for(int i=1;i<str.size()-1;i++){//优化 2 ：左右两边一定是左右括号，不用移动它们。但字符却可以插到它们的后面。
+        string tmp="";
+        tmp+=str;
+        tmp.erase(i,1);//string.erase(pos,n)  //删除从pos开始的n个字符
+        for(int j=1;j<str.size();j++){
+            if(str[i]==str[j]) continue;
+//优化1：插入是插到指定位置的字符之前，如果插入的字符和该位置的字符相同，则插入后还是原字符串，可以跳过这种情况。否则最后的结果要 - 1 。
+            string s="";
+            s+=tmp;
+            s.insert(j,1,str[i]);//再把该字符插到与原来不同的任意位置可以维持原长度，而不影响 LCS 的计算。
+            //insert(size_type index,size_type num,chart c)和insert(iterator pos,size_type num,chart c)
+            if(test(s)){
+                record.insert(s);
+            }
+        }
+    }
+    cout<<record.size()<<endl;
+}
+/*
+因为长度相同,并且也是合法的括号序列,所以正反括号数跟原来一样。
+我们考虑在原序列上枚举一个字符,把这个插入到序列的某个位置去,
+其他序列相对顺序不变,,这样就可以让LCS最大,然后我们判断一下是否合法,丢进set去重就好了。*/
+int main(){
+    read();
+    work();
+    return 0;
+}
