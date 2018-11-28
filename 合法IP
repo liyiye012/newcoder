@@ -1,0 +1,35 @@
+#include<iostream>
+#include<stdio.h>
+using namespace std;
+bool check(string str,int begin,int end){
+    int num=0;
+    for(int i=begin;i<end;i++){
+        int n=str[i]-'0';
+        
+        if(n<0 ||n>9) return false;
+        num=num*10+n;
+    }if(num>=0 && num<256) return true;
+    else return false;
+}
+void solve(string str){
+    int ind1=-1,ind2=-1,ind3=-1;
+    int len=str.size();
+    for(int i=0;i<len;i++){
+        if(str[i] =='.' && ind1==-1){ind1=i;}
+        else if(str[i]=='.' && ind2==-1 && ind1!=-1) ind2=i;
+        else if(str[i]=='.' && ind3==-1 && ind2!=-1) ind3=i;
+    }
+    if(ind3==-1) cout<<"NO"<<endl;
+    else{
+        if(check(str,0,ind1) && check(str,ind1+1,ind2) && check(str,ind2+1,ind3) && check(str,ind3+1,len)) cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+    }
+}
+ 
+int main(){
+     string str;
+    while(cin>>str){
+         solve(str);
+    }
+    return 0;
+}
